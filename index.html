@@ -1,63 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Envelope Animation</title>
 	<style>
-		@keyframes slideUp {
-			0% { transform: translateY(0%); opacity: 1; transform: rotateX(0deg);}
-			100% { transform: translateY(-100%); opacity: 0; transform: rotateX(-90deg);}
+		@keyframes openTop {
+			0% { transform: translateY(0%) rotateX(0deg); opacity: 1; }
+			100% { transform: translateY(-100%) rotateX(-90deg); opacity: 0; }
 		}
 
-		@keyframes slideDown {
+		@keyframes openBottom {
 			0% { transform: translateY(0%); opacity: 1; }
 			100% { transform: translateY(100%); opacity: 0; }
 		}
 
+		@keyframes balloons {
+			0% {  opacity: 0; }
+			20% {  opacity: 1; }
+			99% {  opacity: 1; }
+			100% {  opacity: 0; }
+		}
+
+		/* General Page Setup */
 		body {
 			overflow: hidden;
 			margin: 0;
 			position: relative;
+			background: black; /* Fallback background */
 		}
 
-		#top, #bottom {
+		/* Envelope Top (Flap) */
+		#top {
 			width: 100%;
 			position: absolute;
 			top: 0;
 			left: 0;
 			cursor: pointer;
-		}
-
-		#top {
 			z-index: 2;
 			transform-origin: top center;
 			transition: transform 1s ease-in-out;
 		}
 
+		/* Envelope Bottom */
 		#bottom {
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			cursor: pointer;
 			z-index: 1;
 		}
 
-		.animated1 {
-			animation: slideUp 1s forwards;
+		/* Fire Animation */
+		#balloons {
+			width: 50vw;
+			height: 100vh;
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: 0;
+			opacity: 0;
 		}
-		.animated2 {
-			animation: slideDown 1s forwards;
+
+		/* Fire Background */
+		#fire-bg {
+			width: 50vw;
+			height: 100vh;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translateX(-50%);
+			z-index: -1;
 		}
+
+		/* Envelope Opening Animations */
+		.animated1 { animation: openTop 1s forwards; }
+		.animated2 { animation: openBottom 1s forwards; }
+		.animated3 { animation: balloons 5s forwards 1s; }
 	</style>
 </head>
 <body>
 
-    <img src="2.png" id="bottom" onclick="openEnvelope()">
-    <img src="1.png" id="top" onclick="openEnvelope()">
+	<!-- Envelope Images -->
+	<img src="2.png" id="bottom" onclick="openEnvelope()">
+	<img src="1.png" id="top" onclick="openEnvelope()">
 
-<script>
-	function openEnvelope(){
-		document.getElementById('top').classList.add('animated1');
-		document.getElementById('bottom').classList.add('animated2');
-	}
-</script>
+	<!-- Fire Animation -->
+	<img src="Fire.gif" id="balloons">
+
+	<!-- Background -->
+	<img src="firebg.png" id="fire-bg">
+
+	<script>
+		function openEnvelope(){
+			document.getElementById('balloons').classList.add('animated3');
+			document.getElementById('top').classList.add('animated1');
+			document.getElementById('bottom').classList.add('animated2');
+			
+		}
+	</script>
 
 </body>
 </html>
